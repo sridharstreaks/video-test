@@ -2,4 +2,4 @@ import streamlit as st
 
 
 
-st.video("https://dl.vdocdn.com/openload/1c48e7ca6aca9e606e60bf1cfb9c9d10/4b68c65a53f42fba04c6dab4d4c9adb820241212150153/0baac0/97f809/1734270891?dl=1.mp4",format="video/mp4", start_time=0, subtitles=None, end_time=None, loop=False, autoplay=False, muted=False)
+st.video("https://cdn5.gotofiles.online/download/4d21b3c87970e00398b1ca232bae7530/1734273639/p/Tamil%20HD%20Mobile%20Movies/Ananthapurathu%20Veedu%20(2010)/Ananthapurathu%20Veedu%20(Original)/Ananthapurathu%20Veedu%20(360p%20HD)/Ananthapurathu%20Veedu%202010%20HD.mp4",format="video/mp4", start_time=0, subtitles=None, end_time=None, loop=False, autoplay=False, muted=False)
