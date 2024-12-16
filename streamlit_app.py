@@ -9,7 +9,7 @@ def sample_while():
     i=0
     last=''
     d ={}
-    while not any("Ukraine" in value or "America" in value for value in d.values()):
+    whi not any("Ukraine" in value or "America" in value for value in d.values()):
         os.write(1, ".mp4 not found. Continuing the loop.\n".encode())
         if len(d) > 0:
             *_, last = d.values()
