@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import random
+import time
 
 def sample_while():
     i=0
