@@ -3,7 +3,7 @@ import os
 import random
 import time
 import requests
-from lxml import HTML
+from lxml import html
 
 d={}
 
