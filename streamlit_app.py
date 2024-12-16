@@ -1,10 +1,12 @@
 import streamlit as st
 import os
+import random
 
 def sample_while():
     i=0
     while i<10:
         print("hi")
+        time.sleep(random.randint(0,10))
         i+=1
     return i
 
