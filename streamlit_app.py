@@ -32,6 +32,7 @@ def get_domian(search_keyword,as_sitesearch=None):
         return dicto
         
 def download_link_fetcher(dicto):
+    dicta={}
     while not any(".dl" in value or ".mp4" in value for value in dicto.values()):
         os.write(1, ".mp4 not found. Continuing the loop.\n".encode())
         if len(dicto) > 0:
@@ -53,10 +54,10 @@ def download_link_fetcher(dicto):
             print("error")
             break
         time.sleep(random.randint(0,10))
-    return dicto
+    return dicta
 
-def get_streamlink(dicto):
-    *_, last = dicto.values()
+def get_streamlink(dicta):
+    *_, last = dicta.values()
     return last
 
 st.set_page_config(
