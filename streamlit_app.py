@@ -73,12 +73,15 @@ input_text = st.text_input("Enter your text below:", placeholder="Type here and 
 if input_text:
     # Trigger first function
     get_domian_result = get_domian(input_text,"3moviesda.com")
+    print(get_domian_result)
 
     # Trigger second function with the result of the first
     download_link_fetcher_result = download_link_fetcher(get_domian_result)
+    print(download_link_fetcher_result)
 
     # Final streaming link extractor
     video_path = get_streamlink(download_link_fetcher_result)
+    print(video_path)
 
     # Display the video if the file exists
     try:
