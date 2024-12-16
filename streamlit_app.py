@@ -19,6 +19,7 @@ def count_characters_in_dict_values(my_dict):
     for value in my_dict.values():
         if isinstance(value, str):  # Check if the value is a string
             total_count += len(value)
+            os.write(1, f"download_link_fetcher_result: {total_count}\n".encode())
         time.sleep(10)
     return total_count
 
