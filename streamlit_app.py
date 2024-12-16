@@ -32,7 +32,6 @@ def get_domian(search_keyword,as_sitesearch=None):
         return dicto
         
 def download_link_fetcher(dicto):
-    dicta={}
     while not any(".dl" in value or ".mp4" in value for value in dicto.values()):
         os.write(1, ".mp4 not found. Continuing the loop.\n".encode())
         if len(dicto) > 0:
@@ -54,10 +53,10 @@ def download_link_fetcher(dicto):
             print("error")
             break
         time.sleep(random.randint(0,10))
-    return dicta
+    return dicto
 
-def get_streamlink(dicta):
-    *_, last = dicta.values()
+def get_streamlink(dicto):
+    *_, last = dicto.values()
     return last
 
 st.set_page_config(
@@ -69,33 +68,34 @@ st.set_page_config(
 # Streamlit app
 st.title("Text to Video Player")
 
-# Text input for user
-input_text = st.text_input("Enter your text below:", placeholder="Type here and press Enter...")
+if "step" not in st.session_state:
+    st.session_state.step = 0
+    st.session_state.dicto = {}
 
-if st.button("Submit"):
-    # Trigger first function
-    get_domian_result = get_domian(input_text,"3moviesda.com")
-    os.write(1, f"{get_domian_result}\n".encode())
+if st.session_state.step == 0:
+    input_text = st.text_input("Enter your search term:")
+    if st.button("Fetch Domain"):
+        st.session_state.dicto = get_domian(input_text, "3moviesda.com")
+        st.session_state.step = 1
+        st.experimental_rerun()
 
-    with st.spinner("Running function..."):
-        download_link_fetcher_result = download_link_fetcher(get_domian_result)
-        os.write(1, f"download_link_fetcher_result: {download_link_fetcher_result}\n".encode())
-        time.sleep(30)
-         # Trigger second function with the result of the first
+elif st.session_state.step == 1:
+    st.info("Fetched domain successfully!")
+    if st.button("Fetch Download Links"):
+        st.session_state.dicto = download_link_fetcher(st.session_state.dicto)
+        st.session_state.step = 2
+        st.experimental_rerun()
 
-    # Final streaming link extractor
-    try:
-        video_path = get_streamlink(download_link_fetcher_result)
-        os.write(1, f"video_path: {video_path}\n".encode())
-    except Exception as e:
-        st.error(f"Error in get_streamlink: {str(e)}")
-        st.stop()
+elif st.session_state.step == 2:
+    st.success("Download links fetched!")
+    st.write(st.session_state.dicto)
 
-    # Display the video if the file exists
-    try:
-        st.video(video_path,format="video/mp4", start_time=0, subtitles=None, end_time=None, loop=False, autoplay=False, muted=False)
-    except Exception as e:
-        st.error(f"An error occurred: {str(e)}")
+
+# Display the video if the file exists
+try:
+    st.video(video_path,format="video/mp4", start_time=0, subtitles=None, end_time=None, loop=False, autoplay=False, muted=False)
+except Exception as e:
+    st.error(f"An error occurred: {str(e)}")
 
 
 
