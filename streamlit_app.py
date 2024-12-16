@@ -4,14 +4,15 @@ import time
 import random
 import streamlit as st
 
+payload = {
+'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15',
+'Accept-Language': 'da, en-gb, en',
+'Accept-Encoding': 'gzip, deflate, br',
+'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+'Referer': 'https://www.google.com/'
+}
+
 def get_domian(search_keyword,as_sitesearch=None):
-    payload = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15',
-    'Accept-Language': 'da, en-gb, en',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-    'Referer': 'https://www.google.com/'
-    }
     dicto={}
     if as_sitesearch is None:
         url=f'https://www.google.com/search?q={search_keyword.replace(" ", "+")}'
