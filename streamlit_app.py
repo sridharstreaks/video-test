@@ -13,8 +13,9 @@ payload = {
 'Referer': 'https://www.google.com/'
 }
 
+dicto={}
+
 def get_domian(search_keyword,as_sitesearch=None):
-    dicto={}
     if as_sitesearch is None:
         url=f'https://www.google.com/search?q={search_keyword.replace(" ", "+")}'
         response = requests.get(url, headers= payload)
@@ -31,7 +32,7 @@ def get_domian(search_keyword,as_sitesearch=None):
             dicto[search_keyword]=movie_url
         return dicto
 
-def download_link_fetcher(dicto):
+def download_link_fetcher():
     while not any(".dl" in value or ".mp4" in value for value in dicto.values()):
         print(".mp4 not found. Continuing the loop.")
         if len(dicto) > 0:
