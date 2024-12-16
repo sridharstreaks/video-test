@@ -65,33 +65,16 @@ st.set_page_config(
     layout="centered",  # Page layout option
 )
 
+dicto={}
+dicto['url']="https://3moviesda.com/thangalaan-1080p-hd-movie-download/
+
 # Streamlit app
 st.title("Text to Video Player")
 
-if st.button("Submit"):
-    # Trigger first function
-    get_domian_result = get_domian(input_text,"3moviesda.com")
-    os.write(1, f"{get_domian_result}\n".encode())
-
-    with st.spinner("Running function..."):
-        download_link_fetcher_result = download_link_fetcher(get_domian_result)
-        os.write(1, f"download_link_fetcher_result: {download_link_fetcher_result}\n".encode())
+with st.spinner("Running function..."):
+    download_link_fetcher_result = download_link_fetcher(get_domian_result)
+    os.write(1, f"download_link_fetcher_result: {download_link_fetcher_result}\n".encode())
          # Trigger second function with the result of the first
-
-    # Final streaming link extractor
-    try:
-        video_path = get_streamlink(download_link_fetcher_result)
-        os.write(1, f"video_path: {video_path}\n".encode())
-    except Exception as e:
-        st.error(f"Error in get_streamlink: {str(e)}")
-        st.stop()
-
-
-# Display the video if the file exists
-try:
-    st.video(video_path,format="video/mp4", start_time=0, subtitles=None, end_time=None, loop=False, autoplay=False, muted=False)
-except Exception as e:
-    st.error(f"An error occurred: {str(e)}")
 
 
 
