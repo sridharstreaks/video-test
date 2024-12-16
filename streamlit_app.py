@@ -4,6 +4,7 @@ import time
 import random
 import streamlit as st
 import os
+import asyncio
 
 payload = {
 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15',
@@ -31,7 +32,7 @@ def get_domian(search_keyword,as_sitesearch=None):
             dicto[search_keyword]=movie_url
         return dicto
 
-def download_link_fetcher(dicto):
+async def download_link_fetcher(dicto):
     while not any(".dl" in value or ".mp4" in value for value in dicto.values()):
         os.write(1, ".mp4 not found. Continuing the loop.\n".encode())
         if len(dicto) > 0:
@@ -52,7 +53,7 @@ def download_link_fetcher(dicto):
         else:
             print("error")
             break
-        time.sleep(random.randint(0,10))
+        await asyncio.sleep(random.randint(0,10))
     return dicto
 
 def get_streamlink(dicto):
