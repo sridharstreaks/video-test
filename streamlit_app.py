@@ -77,13 +77,21 @@ if st.button("Submit"):
         get_domian_result = get_domian(input_text,"3moviesda.com")
         os.write(1, f"{get_domian_result}\n".encode())
     
-        # Trigger second function with the result of the first
-        download_link_fetcher_result = download_link_fetcher(get_domian_result)
-        os.write(1, f"{download_link_fetcher_result}\n".encode())
-    
+         # Trigger second function with the result of the first
+        try:
+            download_link_fetcher_result = download_link_fetcher(get_domian_result)
+            os.write(1, f"download_link_fetcher_result: {download_link_fetcher_result}\n".encode())
+        except Exception as e:
+            st.error(f"Error in download_link_fetcher: {str(e)}")
+            st.stop()
+
         # Final streaming link extractor
-        video_path = get_streamlink(download_link_fetcher_result)
-        os.write(1, f"{video_path}\n".encode())
+        try:
+            video_path = get_streamlink(download_link_fetcher_result)
+            os.write(1, f"video_path: {video_path}\n".encode())
+        except Exception as e:
+            st.error(f"Error in get_streamlink: {str(e)}")
+            st.stop()
 
     # Display the video if the file exists
     try:
