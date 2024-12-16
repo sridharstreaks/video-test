@@ -4,8 +4,6 @@ import time
 import random
 import streamlit as st
 import os
-import asyncio
-import concurrent.futures
 
 payload = {
 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15',
@@ -33,7 +31,7 @@ def get_domian(search_keyword,as_sitesearch=None):
             dicto[search_keyword]=movie_url
         return dicto
         
-async def download_link_fetcher(dicto):
+def download_link_fetcher(dicto):
     while not any(".dl" in value or ".mp4" in value for value in dicto.values()):
         os.write(1, ".mp4 not found. Continuing the loop.\n".encode())
         if len(dicto) > 0:
@@ -54,7 +52,7 @@ async def download_link_fetcher(dicto):
         else:
             print("error")
             break
-        await asyncio.sleep(random.randint(0,10))
+        time.sleep(random.randint(0,10))
     return dicto
 
 def get_streamlink(dicto):
@@ -78,12 +76,9 @@ if st.button("Submit"):
     get_domian_result = get_domian(input_text,"3moviesda.com")
     os.write(1, f"{get_domian_result}\n".encode())
 
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        future = executor.submit(download_link_fetcher(get_domian_result))
-
-        with st.spinner("Running function..."):
-            download_link_fetcher_result = future.result()
-            os.write(1, f"download_link_fetcher_result: {download_link_fetcher_result}\n".encode())
+    with st.spinner("Running function..."):
+        download_link_fetcher_result = download_link_fetcher(get_domian_result)
+        os.write(1, f"download_link_fetcher_result: {download_link_fetcher_result}\n".encode())
          # Trigger second function with the result of the first
 
     # Final streaming link extractor
