@@ -53,6 +53,9 @@ def download_link_fetcher(dicto):
             print("error")
             break
         time.sleep(random.randint(0,10))
+
+        # Update session state to persist `dicto`
+        st.session_state.download_link_fetcher_result = dicto
     return dicto
 
 def get_streamlink(dicto):
