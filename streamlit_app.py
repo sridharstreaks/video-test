@@ -65,14 +65,14 @@ st.set_page_config(
     layout="centered",  # Page layout option
 )
 
-dicto={}
-dicto['url']="https://3moviesda.com/thangalaan-1080p-hd-movie-download/"
+dicta={}
+dicta['url']="https://3moviesda.com/thangalaan-1080p-hd-movie-download/"
 
 # Streamlit app
 st.title("Text to Video Player")
 
 with st.spinner("Running function..."):
-    download_link_fetcher_result = download_link_fetcher(dicto)
+    download_link_fetcher_result = download_link_fetcher(dicta)
     os.write(1, f"download_link_fetcher_result: {download_link_fetcher_result}\n".encode())
          # Trigger second function with the result of the first
 
