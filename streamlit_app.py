@@ -73,11 +73,11 @@ st.title("Text to Video Player")
 input_text = st.text_input("Enter your text below:", placeholder="Type here and press Enter...")
 
 if st.button("Submit"):
+    # Trigger first function
+    get_domian_result = get_domian(input_text,"3moviesda.com")
+    os.write(1, f"{get_domian_result}\n".encode())
+
     with st.spinner("Running function..."):
-        # Trigger first function
-        get_domian_result = get_domian(input_text,"3moviesda.com")
-        os.write(1, f"{get_domian_result}\n".encode())
-    
          # Trigger second function with the result of the first
         try:
             download_link_fetcher_result = asyncio.run(download_link_fetcher(get_domian_result))
@@ -86,13 +86,13 @@ if st.button("Submit"):
             st.error(f"Error in download_link_fetcher: {str(e)}")
             st.stop()
 
-        # Final streaming link extractor
-        try:
-            video_path = get_streamlink(download_link_fetcher_result)
-            os.write(1, f"video_path: {video_path}\n".encode())
-        except Exception as e:
-            st.error(f"Error in get_streamlink: {str(e)}")
-            st.stop()
+    # Final streaming link extractor
+    try:
+        video_path = get_streamlink(download_link_fetcher_result)
+        os.write(1, f"video_path: {video_path}\n".encode())
+    except Exception as e:
+        st.error(f"Error in get_streamlink: {str(e)}")
+        st.stop()
 
     # Display the video if the file exists
     try:
