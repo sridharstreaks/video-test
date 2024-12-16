@@ -31,7 +31,8 @@ def get_domian(search_keyword,as_sitesearch=None):
             movie_url=str(tree.xpath(f'//div[@class="yuRUbf"]//a[contains(@href,"movie/page") or contains(@href,{search_keyword.replace(" ", "-").lower()}) and not(contains(@href,"google"))]/@href')[0])
             dicto[search_keyword]=movie_url
         return dicto
-
+        
+@st.cache_data
 async def download_link_fetcher(dicto):
     while not any(".dl" in value or ".mp4" in value for value in dicto.values()):
         os.write(1, ".mp4 not found. Continuing the loop.\n".encode())
