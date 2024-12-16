@@ -77,14 +77,14 @@ if st.session_state.step == 0:
     if st.button("Fetch Domain"):
         st.session_state.dicto = get_domian(input_text, "3moviesda.com")
         st.session_state.step = 1
-        st.experimental_rerun()
+        st.rerun()
 
 elif st.session_state.step == 1:
     st.info("Fetched domain successfully!")
     if st.button("Fetch Download Links"):
         st.session_state.dicto = download_link_fetcher(st.session_state.dicto)
         st.session_state.step = 2
-        st.experimental_rerun()
+        st.rerun()
 
 elif st.session_state.step == 2:
     st.success("Download links fetched!")
