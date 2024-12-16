@@ -66,7 +66,7 @@ st.set_page_config(
 )
 
 dicto={}
-dicto['url']="https://3moviesda.com/thangalaan-1080p-hd-movie-download/
+dicto['url']="https://3moviesda.com/thangalaan-1080p-hd-movie-download/"
 
 # Streamlit app
 st.title("Text to Video Player")
