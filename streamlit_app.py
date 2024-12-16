@@ -80,7 +80,7 @@ if st.button("Submit"):
     
          # Trigger second function with the result of the first
         try:
-            download_link_fetcher_result = download_link_fetcher(get_domian_result)
+            download_link_fetcher_result = asyncio.run(download_link_fetcher(get_domian_result))
             os.write(1, f"download_link_fetcher_result: {download_link_fetcher_result}\n".encode())
         except Exception as e:
             st.error(f"Error in download_link_fetcher: {str(e)}")
