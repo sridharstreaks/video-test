@@ -25,7 +25,7 @@ def get_domian(search_keyword,as_sitesearch=None):
         response = requests.get(url, headers= payload)
         if response.status_code==200:
             tree = html.fromstring(response.content)
-            movie_url=str(tree.xpath('//div[@class="yuRUbf"]//a[contains(@href,"movie/page") and not(contains(@href,"google"))]/@href')[0])
+            movie_url=str(tree.xpath(f'//div[@class="yuRUbf"]//a[contains(@href,"movie/page") or contains(@href,{search_keyword.replace(" ", "-").lower()}) and not(contains(@href,"google"))]/@href')[0])
             dicto[search_keyword]=movie_url
         return dicto
 
