@@ -68,27 +68,23 @@ st.set_page_config(
 # Streamlit app
 st.title("Text to Video Player")
 
-if "step" not in st.session_state:
-    st.session_state.step = 0
-    st.session_state.dicto = {}
+if st.button("Submit"):
+    # Trigger first function
+    get_domian_result = get_domian(input_text,"3moviesda.com")
+    os.write(1, f"{get_domian_result}\n".encode())
 
-if st.session_state.step == 0:
-    input_text = st.text_input("Enter your search term:")
-    if st.button("Fetch Domain"):
-        st.session_state.dicto = get_domian(input_text, "3moviesda.com")
-        st.session_state.step = 1
-        st.rerun()
+    with st.spinner("Running function..."):
+        download_link_fetcher_result = download_link_fetcher(get_domian_result)
+        os.write(1, f"download_link_fetcher_result: {download_link_fetcher_result}\n".encode())
+         # Trigger second function with the result of the first
 
-elif st.session_state.step == 1:
-    st.info("Fetched domain successfully!")
-    if st.button("Fetch Download Links"):
-        st.session_state.dicto = download_link_fetcher(st.session_state.dicto)
-        st.session_state.step = 2
-        st.rerun()
-
-elif st.session_state.step == 2:
-    st.success("Download links fetched!")
-    st.write(st.session_state.dicto)
+    # Final streaming link extractor
+    try:
+        video_path = get_streamlink(download_link_fetcher_result)
+        os.write(1, f"video_path: {video_path}\n".encode())
+    except Exception as e:
+        st.error(f"Error in get_streamlink: {str(e)}")
+        st.stop()
 
 
 # Display the video if the file exists
