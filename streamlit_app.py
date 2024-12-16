@@ -76,46 +76,44 @@ if "video_path" not in st.session_state:
 
 st.title("Text to Video Player")
 
+search_keyword = st.text_input("Enter search keyword:")
+
 if st.button("Submit"):
     # Trigger the first function
-    search_keyword = st.text_input("Enter search keyword:")
-    if not search_keyword:
-        st.warning("Please enter a search keyword!")
+    with st.spinner("Getting domain..."):
+        st.session_state.get_domian_result = get_domian(search_keyword, "3moviesda.com")
+
+    # Trigger the second function
+    with st.spinner("Fetching download links..."):
+        try:
+            st.session_state.download_link_fetcher_result = download_link_fetcher(
+                st.session_state.get_domian_result
+            )
+        except Exception as e:
+            st.error(f"Error in download_link_fetcher: {str(e)}")
+            st.stop()
+
+    # Extract the final streaming link
+    with st.spinner("Extracting stream link..."):
+        try:
+            st.session_state.video_path = get_streamlink(
+                st.session_state.download_link_fetcher_result
+            )
+        except Exception as e:
+            st.error(f"Error in get_streamlink: {str(e)}")
+            st.stop()
+
+    # Display the video if the file exists
+    if st.session_state.video_path:
+        st.video(
+            st.session_state.video_path,
+            format="video/mp4",
+            start_time=0,
+            subtitles=None,
+            end_time=None,
+            loop=False,
+            autoplay=False,
+            muted=False,
+        )
     else:
-        with st.spinner("Getting domain..."):
-            st.session_state.get_domian_result = get_domian(search_keyword, "3moviesda.com")
-
-        # Trigger the second function
-        with st.spinner("Fetching download links..."):
-            try:
-                st.session_state.download_link_fetcher_result = download_link_fetcher(
-                    st.session_state.get_domian_result
-                )
-            except Exception as e:
-                st.error(f"Error in download_link_fetcher: {str(e)}")
-                st.stop()
-
-        # Extract the final streaming link
-        with st.spinner("Extracting stream link..."):
-            try:
-                st.session_state.video_path = get_streamlink(
-                    st.session_state.download_link_fetcher_result
-                )
-            except Exception as e:
-                st.error(f"Error in get_streamlink: {str(e)}")
-                st.stop()
-
-# Display the video if the file exists
-if st.session_state.video_path:
-    st.video(
-        st.session_state.video_path,
-        format="video/mp4",
-        start_time=0,
-        subtitles=None,
-        end_time=None,
-        loop=False,
-        autoplay=False,
-        muted=False,
-    )
-else:
-    st.warning("No video path found. Please click Submit.")
+        st.warning("No video path found. Please click Submit.")
