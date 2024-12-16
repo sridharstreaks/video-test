@@ -3,10 +3,12 @@ import os
 import random
 import time
 
+d ={'Name':'Steve', 'Age':30, 'Designation':'Programmer', 'Salary':'100k', 'Country':'USA'}
+
 def sample_while():
     i=0
-    while i<10:
-        print("hi")
+    while i<len(d):
+        os.write(1, "hi\n".encode())
         time.sleep(random.randint(0,10))
         i+=1
     return i
