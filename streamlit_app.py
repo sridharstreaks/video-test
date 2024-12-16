@@ -32,7 +32,7 @@ def get_domian(search_keyword,as_sitesearch=None):
             dicto[search_keyword]=movie_url
         return dicto
 
-def download_link_fetcher():
+def download_link_fetcher(dicto):
     while not any(".dl" in value or ".mp4" in value for value in dicto.values()):
         print(".mp4 not found. Continuing the loop.")
         if len(dicto) > 0:
