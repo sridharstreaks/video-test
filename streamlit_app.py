@@ -2,16 +2,22 @@ import streamlit as st
 import os
 import random
 import time
-
-d ={'Name':'Steve', 'Age':30, 'Designation':'Programmer', 'Salary':'100k', 'Country':'USA'}
+import requests
 
 def sample_while():
     i=0
-    while i<len(d):
-        os.write(1, "hi\n".encode())
-        time.sleep(random.randint(0,10))
+    last=''
+    d ={}
+    while not any("Ukraine" in value or "America" in value for value in d.values()):
+        os.write(1, ".mp4 not found. Continuing the loop.\n".encode())
+        if len(d) > 0:
+            *_, last = d.values()
+            os.write(1, f"{last}\n".encode())
+        response=requests.get("https://randomuser.me/api/")
+        tree = html.fromstring(response.content)
+        d[i]=tree.xpath('//pre/text()')
         i+=1
-    return i
+    return d
 
 with st.spinner("Running function..."):
         result = sample_while()
