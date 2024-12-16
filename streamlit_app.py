@@ -3,6 +3,7 @@ from lxml import html
 import time
 import random
 import streamlit as st
+import os
 
 payload = {
 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15',
